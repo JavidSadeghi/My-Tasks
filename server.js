@@ -1,10 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const path = require('path');
 
 const app = express();
-
-// let day = new Date();
-// console.log('Date is: ' + day.getDay());
 
 // Connect Database
 connectDB();
@@ -12,12 +10,21 @@ connectDB();
 // Initial Middlware
 app.use(express.json({ extended: false }));
 
-// app.get('/', (req, res) => res.json({ msg: 'Hello' }));
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
+
+//Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) =>
+    res.send(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+};
 
 const PORT = process.env.PORT || 5000;
 
