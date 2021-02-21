@@ -14,6 +14,7 @@ const TaskForm = () => {
         description: '',
         frequency: [false, false, false, false, false, false, false],
         priority: 'Medium',
+        doneDate: '01-01-2000'
       });
     }
   }, [taskContext, current]);
@@ -23,9 +24,10 @@ const TaskForm = () => {
     description: '',
     frequency: [false, false, false, false, false, false, false],
     priority: 'Medium',
+    doneDate: '01-01-2000'
   });
 
-  const { name, description, frequency, priority } = task;
+  const { name, description, frequency, priority, doneDate } = task;
 
   const onChange = (e) => {
     if (e.target.type === 'checkbox') {
@@ -36,10 +38,11 @@ const TaskForm = () => {
       setTask({ ...task, [e.target.name]: e.target.value });
     }
   };
+  
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (current === null) {
+     if (current === null) {
       addTask(task);
     } else {
       updateTask(task);
@@ -54,6 +57,7 @@ const TaskForm = () => {
       description: '',
       frequency: [false, false, false, false, false, false, false],
       priority: 'Medium',
+      doneDate: '01-01-2000'
     });
   };
 

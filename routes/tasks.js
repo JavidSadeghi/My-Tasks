@@ -86,7 +86,6 @@ router.put('/:id', auth, async (req, res) => {
     );
 
     res.json(task);
-    console.log('Task Updated');
   } catch (error) {
     console.log(err.message);
     res.status(500).json({ msg: 'Server Error' });

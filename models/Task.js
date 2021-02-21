@@ -25,8 +25,7 @@ const TaskSchema = mongoose.Schema({
     default: Date.now
   },
   doneDate:{
-    type: Date,
-    default: new Date(00-00-2000)
+    type: String
    }
 });
 

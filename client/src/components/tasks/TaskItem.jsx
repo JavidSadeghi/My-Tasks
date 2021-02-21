@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import TaskContext from '../../context/task/taskContext';
 
@@ -6,14 +6,11 @@ const TaskItem = ({ task }) => {
   const taskContext = useContext(TaskContext);
   const { deleteTask, setCurrent, clearCurrent, updateTask } = taskContext;
 
-  // useEffect(() => {
-  //   setLocalTask(task);
-  // }, [taskContext, task]);
-
   const { _id, name, description, frequency, priority, doneDate } = task;
 
   const date = new Date();
   const day = date.getDay();
+  const dateString = date.getDay() + '-' + date.getMonth() + '-' + date.getFullYear();
 
   const [localTask, setLocalTask] = useState({
     _id,
@@ -21,7 +18,7 @@ const TaskItem = ({ task }) => {
     description,
     frequency,
     priority,
-    doneDate: date
+    doneDate: dateString
   });
 
 
@@ -31,31 +28,14 @@ const TaskItem = ({ task }) => {
   };
 
   const onItIsDone = () => {
-    // setLocalTask(task);
-    // setLocalTask({ ...localTask, doneDate: Date.now });
     updateTask(localTask);
     clearCurrent();
   };
 
-  const checkDone = () => {
-    let date = new Date();
-    if (
-      doneDate === null &&
-      date.getFullYear() === doneDate.getFullYear() &&
-      date.getMonth() === doneDate.getMonth() &&
-      date.getDay() === doneDate.getDay()
-    ) {
-      return false;
-    } else {
-      // console.log(date);
-      // console.log(doneDate);
-      return true;
-    }
-  };
 
   return (
     <Fragment>
-      {frequency[day] && checkDone() ? (
+      {frequency[day] && dateString !== doneDate ? (
         <div className='card mt-1 bg-light'>
           <div className='card-body'>
             <h5 className='card-title'>
@@ -73,7 +53,7 @@ const TaskItem = ({ task }) => {
             <ul className='list-group'>
               {description && (
                 <li className='list-group-item p-0 border-0 bg-light'>
-                  <i className='fas fa-envelope-open mr-1'></i>
+                  <i className='fas fa-info-circle mr-1 mb-2'></i>
                   {description}
                 </li>
               )}
